@@ -157,7 +157,7 @@ Provide a safe, lightweight demonstration that does not require the restricted E
 ```text
 mindscope/
 ├── README.md
-├── LICENSE
+├── NOTICE.md
 ├── .env.example
 ├── .gitignore
 ├── requirements.txt
@@ -190,7 +190,7 @@ mindscope/
     └── test_public_release.py
 ```
 
-The public code is a clean, runnable portfolio slice. Large or dependency-heavy research scripts may be summarized and linked in documentation only when they cannot be made reproducible without restricted assets. Any selected source copied from the archive is sanitized and reviewed before inclusion.
+The public code is a clean, runnable portfolio slice. Large or dependency-heavy research scripts may be summarized and linked in documentation only when they cannot be made reproducible without restricted assets. Any selected source copied from the archive is sanitized and reviewed before inclusion. Because this was team work and third-party provenance is incomplete, the first release has no permissive open-source license; `NOTICE.md` reserves reuse rights while permitting public portfolio review.
 
 ## 9. Data and Secret Exclusion Policy
 
