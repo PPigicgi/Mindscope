@@ -87,11 +87,11 @@ Initial evidence set:
 
 | Track | Selected model | Test AUC | Balanced accuracy | F1 | Evaluation note |
 |---|---|---:|---:|---:|---|
-| Dementia audio | HuBERT + XGBoost | 0.7651 | 0.7280 | 0.7121 | Internal held-out evaluation; sample count and split wording taken from the metrics audit |
-| Depression audio | HuBERT + MLP | 0.5846 | 0.5795 | 0.7250 | Internal 56-session evaluation; threshold-selection leakage risk disclosed |
-| Depression video | OpenFace + Mamba-3 | 0.5987 | 0.5782 | 0.6567 | Internal 56-session reevaluation; not the historical 0.7511 dashboard value |
+| Dementia audio | HuBERT + XGBoost | 0.7651 | 0.7280 | 0.7121 | Internal 412-sample held-out test; development-threshold leakage and test-set model selection disclosed |
+| Depression audio | HuBERT + MLP | 0.5846 | 0.5795 | 0.7250 | Internal 56-session test; high recall 0.9667 paired with low specificity 0.1923; leakage disclosed |
+| Depression video | OpenFace + Mamba-3 | 0.5987 | 0.5590 | 0.6471 | Internal 56-session reevaluation recomputed from predictions; not the historical 0.7511 dashboard value |
 
-The final README must reconcile exact threshold values and sample counts against the audit before publication.
+Public thresholds are fixed to the primary evidence files: dementia audio `0.39`, depression audio `0.05`, and depression video `0.81`. The README must not use contradictory values from `organized_results/best/*.csv`.
 
 Excluded claims:
 
@@ -211,7 +211,8 @@ The original detected Groq key must be revoked and replaced outside this reposit
 
 - The project is not a medical device and does not provide a diagnosis.
 - Metrics are internal experimental results, not external clinical validation.
-- Depression-audio threshold selection has a known leakage risk and is disclosed.
+- HuBERT development-threshold selection has a known leakage risk and is disclosed for both audio tracks.
+- Selected-model scores are exploratory because model choice used test metrics in the archived experiment workflow.
 - Small, imbalanced datasets limit generalization.
 - Audio/video sessions are sensitive biometric and health-related data and remain outside the public repository.
 - A real deployment requires consent, secure retention, access control, bias evaluation, calibration, and prospective clinical validation.
@@ -238,4 +239,3 @@ Publication is blocked unless all checks pass:
 - Description: `Multimodal mental-health screening research prototype connecting NIX edge capture, ML inference, and a web dashboard.`
 - The first public release is pushed only after the validation gates pass.
 - If `mindscope` already exists under the authenticated account, use `mindscope-nix` rather than overwriting an unrelated repository.
-
