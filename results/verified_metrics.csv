@@ -1,0 +1,4 @@
+track_id,modality,model,n_test,positive_count,negative_count,threshold,roc_auc,balanced_accuracy,f1,precision,recall,specificity,scope
+dementia_audio,audio,HuBERT + XGBoost,412,183,229,0.39,0.76515,0.72804,0.71212,0.66197,0.77049,0.68559,internal held-out test benchmark
+depression_audio,audio,HuBERT + MLP,56,30,26,0.05,0.58462,0.57949,0.72500,0.58000,0.96667,0.19231,internal test benchmark with evaluation caveats
+depression_video,video,OpenFace + Mamba-3,56,30,26,0.81,0.59872,0.55897,0.64706,0.57895,0.73333,0.38462,internal test benchmark recomputed from predictions
