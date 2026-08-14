@@ -56,7 +56,7 @@ def text_release_findings(relative_path: Path, text: str) -> list[str]:
         + r"[ _-]*(?:api[ _-]*)?(?:key|token)|"
         + r"pass(?:word|wd)|pwd|credentials?|"
         + r"aws[ _-]*(?:access[ _-]*key[ _-]*id|secret[ _-]*access[ _-]*key)"
-        + r")\b\s*[:=]\s*[^\s#]+"
+        + r")\b[\"']?\s*[:=]\s*[\"']?[^\s#]+"
     )
     secret_prefix = re.compile(
         r"(?i)\b(?:gh" + "p_|gho_|ghu_|ghs_|ghr_|gsk_|sk-" + r")[a-z0-9_-]{8,}"
@@ -79,7 +79,7 @@ def text_release_findings(relative_path: Path, text: str) -> list[str]:
     text_rules = {
         "secret assignment": secret_assignment,
         "secret key/token prefix": secret_prefix,
-        "bearer token": bearer_value,
+        "bearer " + "token": bearer_value,
         "AWS access-key prefix": aws_access_key_prefix,
         "private-key material": private_key_header,
         "RFC1918 IPv4 address": private_ipv4,
@@ -98,7 +98,6 @@ def text_release_findings(relative_path: Path, text: str) -> list[str]:
 
 
 def release_findings(paths: list[Path]) -> list[str]:
-    secret_filenames = {"." + "env", "." + "env" + ".local", "." + "env" + ".production"}
     secret_like_stems = {
         "credential",
         "credentials",
@@ -161,7 +160,7 @@ def release_findings(paths: list[Path]) -> list[str]:
         name = relative_path.name.casefold()
         absolute_path = REPOSITORY_ROOT / relative_path
 
-        if name in secret_filenames:
+        if name.startswith("." + "env") and name != "." + "env" + ".example":
             findings.append(f"{normalized}: secret filename")
         elif (
             name.split(".", maxsplit=1)[0] in secret_like_stems
@@ -281,6 +280,22 @@ def test_text_rules_reject_common_credentials_and_private_keys(
     assert f"notes.txt: {expected_rule}" in findings
 
 
+@pytest.mark.parametrize(
+    "quoted_assignment",
+    [
+        '"' + "pass" + "word" + '": "' + "secret-value" + '"',
+        '"AWS_SECRET_ACCESS_' + "KEY" + '": "' + "private-value" + '"',
+    ],
+)
+def test_text_rules_reject_quoted_json_credential_assignments(
+    quoted_assignment: str,
+) -> None:
+    """Quoted JSON keys and values must not bypass assignment detection."""
+    assert text_release_findings(Path("probe.json"), quoted_assignment) == [
+        "probe.json: secret assignment"
+    ]
+
+
 def test_release_gate_rejects_secret_like_filenames(tmp_path, monkeypatch) -> None:
     """A force-added credential file is unsafe even when its content is harmless."""
     relative_path = Path("creden" + "tials.json")
@@ -290,6 +305,20 @@ def test_release_gate_rejects_secret_like_filenames(tmp_path, monkeypatch) -> No
     findings = release_findings([relative_path])
 
     assert findings == [f"{relative_path.as_posix()}: secret-like filename"]
+
+
+@pytest.mark.parametrize("filename", [".env.staging", ".EnV.StAgInG"])
+def test_release_gate_rejects_every_env_variant_regardless_of_case(
+    filename: str, tmp_path, monkeypatch
+) -> None:
+    """Any force-added .env-prefixed file except .env.example blocks release."""
+    relative_path = Path(filename)
+    (tmp_path / relative_path).write_text("safe-looking", encoding="utf-8")
+    monkeypatch.setattr("test_public_release.REPOSITORY_ROOT", tmp_path)
+
+    assert release_findings([relative_path]) == [
+        f"{relative_path.as_posix()}: secret filename"
+    ]
 
 
 @pytest.mark.parametrize(
