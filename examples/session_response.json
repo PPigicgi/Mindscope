@@ -1,0 +1,21 @@
+{
+  "audio_quality": {
+    "duration_seconds": 10.0,
+    "rms": 0.01,
+    "usable": true,
+    "reason": "ok"
+  },
+  "depression_audio": {
+    "status": "not_available_in_public_demo",
+    "reason": "not_available_in_public_demo"
+  },
+  "dementia_audio": {
+    "status": "not_available_in_public_demo",
+    "reason": "not_available_in_public_demo"
+  },
+  "depression_video": {
+    "status": "not_available_in_public_demo",
+    "reason": "not_available_in_public_demo"
+  },
+  "disclaimer": "Research prototype — not a medical diagnosis."
+}
