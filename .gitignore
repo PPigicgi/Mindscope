@@ -1,1 +1,62 @@
 .worktrees/
+
+# Python environments and bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.tox/
+.nox/
+.venv/
+venv/
+env/
+
+# Local configuration
+.env*
+!.env.example
+
+# Media (the public hero asset is intentionally allowed)
+*.wav
+*.mp3
+*.m4a
+*.flac
+*.ogg
+*.mp4
+*.mov
+*.avi
+*.mkv
+*.webm
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.webp
+!assets/hero.png
+
+# Generated data, arrays, and model artifacts
+*.npy
+*.npz
+*.pt
+*.pth
+*.ckpt
+*.onnx
+*.h5
+*.hdf5
+*.pkl
+*.pickle
+*.joblib
+data/
+datasets/
+received_sessions/
+experiments/cache/
+
+# Internal artifacts and archives
+.superpowers/
+*.zip
+*.tar
+*.tar.gz
+*.tgz
+*.7z
+*.rar
