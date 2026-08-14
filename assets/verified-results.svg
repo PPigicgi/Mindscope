@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="500" viewBox="0 0 1200 500" role="img" aria-labelledby="results-title results-desc">
+  <title id="results-title">MindScope verified internal benchmark results</title>
+  <desc id="results-desc">Three internal benchmark rows report sample count, ROC-AUC, and balanced accuracy for dementia audio, depression audio, and depression video. The depression audio row notes low specificity.</desc>
+  <defs>
+    <style>
+      .bg { fill: #0B1020; }
+      .row { fill: #111831; stroke: #4F46E5; stroke-width: 2; }
+      .rule { stroke: #334155; stroke-width: 1; }
+      .title { fill: #CBD5E1; font: 700 24px Arial, sans-serif; }
+      .track { fill: #CBD5E1; font: 700 18px Arial, sans-serif; }
+      .model { fill: #22D3EE; font: 600 15px Arial, sans-serif; }
+      .metric { fill: #CBD5E1; font: 700 24px Arial, sans-serif; text-anchor: middle; }
+      .metric-label { fill: #94A3B8; font: 13px Arial, sans-serif; text-anchor: middle; }
+      .scope { fill: #94A3B8; font: 13px Arial, sans-serif; }
+      .caveat { fill: #F59E0B; font: 600 13px Arial, sans-serif; }
+    </style>
+  </defs>
+
+  <rect class="bg" width="1200" height="500" rx="20"/>
+  <text class="title" x="40" y="48">Verified Results · Internal Benchmarks</text>
+  <text class="scope" x="40" y="76">Audited experimental results; rounded to three decimals; not clinical validation.</text>
+
+  <rect class="row" x="35" y="100" width="1130" height="105" rx="14"/>
+  <text class="scope" x="55" y="124">Internal benchmark</text>
+  <text class="track" x="55" y="153">Dementia audio</text>
+  <text class="model" x="55" y="181">HuBERT + XGBoost</text>
+  <line class="rule" x1="485" y1="118" x2="485" y2="188"/>
+  <text class="metric-label" x="580" y="139">TEST N</text>
+  <text class="metric" x="580" y="174">412</text>
+  <text class="metric-label" x="775" y="139">ROC-AUC</text>
+  <text class="metric" x="775" y="174">0.765</text>
+  <text class="metric-label" x="1010" y="139">BALANCED ACCURACY</text>
+  <text class="metric" x="1010" y="174">0.728</text>
+
+  <rect class="row" x="35" y="220" width="1130" height="125" rx="14"/>
+  <text class="scope" x="55" y="244">Internal benchmark</text>
+  <text class="track" x="55" y="273">Depression audio</text>
+  <text class="model" x="55" y="301">HuBERT + MLP</text>
+  <text class="caveat" x="55" y="326">Low specificity: 0.192</text>
+  <line class="rule" x1="485" y1="238" x2="485" y2="327"/>
+  <text class="metric-label" x="580" y="269">TEST N</text>
+  <text class="metric" x="580" y="304">56</text>
+  <text class="metric-label" x="775" y="269">ROC-AUC</text>
+  <text class="metric" x="775" y="304">0.585</text>
+  <text class="metric-label" x="1010" y="269">BALANCED ACCURACY</text>
+  <text class="metric" x="1010" y="304">0.579</text>
+
+  <rect class="row" x="35" y="360" width="1130" height="105" rx="14"/>
+  <text class="scope" x="55" y="384">Internal benchmark</text>
+  <text class="track" x="55" y="413">Depression video</text>
+  <text class="model" x="55" y="441">OpenFace + Mamba-3</text>
+  <line class="rule" x1="485" y1="378" x2="485" y2="448"/>
+  <text class="metric-label" x="580" y="399">TEST N</text>
+  <text class="metric" x="580" y="434">56</text>
+  <text class="metric-label" x="775" y="399">ROC-AUC</text>
+  <text class="metric" x="775" y="434">0.599</text>
+  <text class="metric-label" x="1010" y="399">BALANCED ACCURACY</text>
+  <text class="metric" x="1010" y="434">0.559</text>
+</svg>

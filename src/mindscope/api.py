@@ -8,7 +8,12 @@ from mindscope.demo_pipeline import analyze_demo_session
 from mindscope.schemas import SessionRequest, SessionResponse
 
 
-app = FastAPI(title="MindScope Public Demo API")
+app = FastAPI(
+    title="MindScope Public Demo API",
+    openapi_url=None,
+    docs_url=None,
+    redoc_url=None,
+)
 
 
 @app.get("/health")

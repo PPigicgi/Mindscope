@@ -10,6 +10,11 @@ EXAMPLE_REQUEST_PATH = Path(__file__).parents[1] / "examples" / "session_request
 EXAMPLE_RESPONSE_PATH = Path(__file__).parents[1] / "examples" / "session_response.json"
 
 
+def test_public_demo_exposes_only_its_two_contract_routes():
+    """Catches generated documentation endpoints expanding the public API surface."""
+    assert {route.path for route in app.routes} == {"/health", "/analyze/session"}
+
+
 def test_health_reports_the_public_demo_contract():
     """Catches a route that exposes the wrong mode or health payload."""
     client = TestClient(app)
