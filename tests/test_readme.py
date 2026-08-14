@@ -1,4 +1,5 @@
 import re
+import xml.etree.ElementTree as ET
 from pathlib import Path
 from urllib.parse import unquote
 
@@ -83,3 +84,24 @@ def test_readme_avoids_unsupported_or_clinical_claims() -> None:
 
     medical_device_claims = lowered.replace("not a medical device", "")
     assert "medical device" not in medical_device_claims
+
+
+def test_architecture_input_connectors_enter_nix_top_edge() -> None:
+    tree = ET.parse(ROOT / "assets" / "architecture.svg")
+    paths = {
+        path.get("data-flow"): path
+        for path in tree.findall(".//{http://www.w3.org/2000/svg}path")
+        if path.get("data-flow") in {"camera-to-nix", "microphone-to-nix"}
+    }
+
+    assert set(paths) == {"camera-to-nix", "microphone-to-nix"}
+    for connector_name, path in paths.items():
+        assert path.get("marker-end") == "url(#arrow)", connector_name
+        route = re.fullmatch(
+            r"M[\d.]+ 210 V(?P<bend_y>[\d.]+) H(?P<x>[\d.]+) V(?P<y>[\d.]+)",
+            path.get("d", ""),
+        )
+        assert route is not None, f"{connector_name} lacks a final vertical segment"
+        assert float(route.group("bend_y")) < 258
+        assert 85 <= float(route.group("x")) <= 315
+        assert float(route.group("y")) == 258

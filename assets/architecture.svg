@@ -37,8 +37,8 @@
   <text class="label" x="272.5" y="154">ReSpeaker</text>
   <text class="small" x="272.5" y="178">microphone array</text>
 
-  <path class="flow" d="M112.5 210 V245 H177"/>
-  <path class="flow" d="M272.5 210 V245 H208"/>
+  <path class="flow" data-flow="camera-to-nix" d="M112.5 210 V235 H177 V258" marker-end="url(#arrow)"/>
+  <path class="flow" data-flow="microphone-to-nix" d="M272.5 210 V235 H208 V258" marker-end="url(#arrow)"/>
 
   <rect class="node" x="85" y="258" width="230" height="115" rx="14"/>
   <text class="label" x="200" y="291">NIX</text>
