@@ -27,7 +27,16 @@ def assess_audio(
 
     sample_count = len(samples)
     raw_duration_seconds = sample_count / sample_rate
-    raw_rms = sqrt(sum(sample * sample for sample in samples) / sample_count) if samples else 0.0
+    if samples:
+        scale = max(abs(sample) for sample in samples)
+        raw_rms = (
+            scale
+            * sqrt(sum((sample / scale) ** 2 for sample in samples) / sample_count)
+            if scale
+            else 0.0
+        )
+    else:
+        raw_rms = 0.0
     duration_seconds = round(raw_duration_seconds, 3)
     rms = round(raw_rms, 6)
 

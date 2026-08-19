@@ -1,4 +1,6 @@
 {
+  "subject_id": "demo-subject-001",
+  "run_id": "demo-run-001",
   "audio_quality": {
     "duration_seconds": 10.0,
     "rms": 0.01,

@@ -23,6 +23,8 @@ def analyze_demo_session(request: SessionRequest) -> SessionResponse:
         else TrackState(status="skipped", reason="no_video_features")
     )
     return SessionResponse(
+        subject_id=request.subject_id,
+        run_id=request.run_id,
         audio_quality=audio_quality,
         depression_audio=audio_track,
         dementia_audio=audio_track,

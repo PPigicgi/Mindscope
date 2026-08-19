@@ -66,6 +66,8 @@ class SessionResponse(BaseModel):
 
     model_config = ConfigDict(extra="forbid")
 
+    subject_id: str = Field(strict=True, pattern=_IDENTIFIER_PATTERN)
+    run_id: str = Field(strict=True, pattern=_IDENTIFIER_PATTERN)
     audio_quality: AudioQuality
     depression_audio: TrackState
     dementia_audio: TrackState

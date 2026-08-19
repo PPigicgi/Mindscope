@@ -1,3 +1,5 @@
+import math
+
 import pytest
 
 from mindscope.quality import assess_audio
@@ -41,6 +43,16 @@ def test_empty_audio_has_zero_measurements():
     assert quality.rms == 0.0
     assert quality.usable is False
     assert quality.reason == "no_audio"
+
+
+def test_extreme_finite_audio_has_finite_representable_rms():
+    """Catches overflow from squaring large finite samples directly."""
+    quality = assess_audio([1e308] * 100, sample_rate=10)
+
+    assert math.isfinite(quality.rms)
+    assert quality.rms == 1e308
+    assert quality.usable is True
+    assert quality.reason == "ok"
 
 
 def test_non_positive_sample_rate_is_rejected():
